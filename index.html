@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cielos del Norte Chico</title>
+  <meta name="description" content="Los cielos más limpios del planeta: observatorios de la Región de Coquimbo, Chile.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05060f;
+      --bg-2: #0b0e24;
+      --ink: #e9ecff;
+      --muted: #9aa3c7;
+      --line: rgba(233, 236, 255, 0.12);
+      --card: rgba(255, 255, 255, 0.04);
+      --gold: #ffc96b;
+      --violet: #8b7bff;
+      --cyan: #5ee1ff;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #sky {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      display: block;
+    }
+
+    .glow {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(60% 50% at 80% 0%, rgba(139, 123, 255, 0.18), transparent 70%),
+        radial-gradient(50% 40% at 10% 100%, rgba(94, 225, 255, 0.10), transparent 70%);
+    }
+
+    .wrap { width: min(1100px, 100% - 32px); margin-inline: auto; }
+
+    /* ---------- Nav ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(5, 6, 15, 0.55);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .brand {
+      font-family: "Fraunces", serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .brand span { color: var(--gold); }
+    nav ul { display: flex; gap: 28px; list-style: none; }
+    nav a.link { color: var(--muted); text-decoration: none; font-size: 0.92rem; transition: color .2s; }
+    nav a.link:hover { color: var(--ink); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 80px 0 120px;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(255, 201, 107, 0.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-family: "Fraunces", serif;
+      font-weight: 300;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+    }
+    h1 em {
+      font-style: italic;
+      background: linear-gradient(100deg, var(--gold), #ff9f6b 40%, var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .lead {
+      max-width: 620px;
+      margin: 28px auto 40px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 26px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--bg);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(255, 201, 107, 0.25); }
+
+    /* ---------- Stats ---------- */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      margin-top: -60px;
+      position: relative;
+    }
+    .stat { padding: 28px 24px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat b {
+      display: block;
+      font-family: "Fraunces", serif;
+      font-weight: 600;
+      font-size: 2.2rem;
+      color: var(--gold);
+    }
+    .stat span { color: var(--muted); font-size: 0.9rem; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 110px 0 40px; }
+    .section-head { max-width: 640px; margin-bottom: 48px; }
+    h2 {
+      font-family: "Fraunces", serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-head p { color: var(--muted); }
+
+    .why {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .why article {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .why .icon {
+      width: 46px; height: 46px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: rgba(139, 123, 255, 0.15);
+      color: var(--violet);
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+    .why h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .why p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ---------- Observatories ---------- */
+    .obs { display: grid; gap: 14px; }
+    .ob {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      transition: border-color .25s, transform .25s, background .25s;
+    }
+    .ob:hover {
+      border-color: rgba(255, 201, 107, 0.45);
+      background: rgba(255, 201, 107, 0.05);
+      transform: translateX(6px);
+    }
+    .ob .num {
+      font-family: "Fraunces", serif;
+      font-size: 2rem;
+      color: rgba(233, 236, 255, 0.25);
+    }
+    .ob h3 { font-size: 1.12rem; }
+    .ob p { color: var(--muted); font-size: 0.93rem; }
+    .tag {
+      font-size: 0.78rem;
+      color: var(--cyan);
+      border: 1px solid rgba(94, 225, 255, 0.3);
+      padding: 5px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* ---------- Quote ---------- */
+    .quote {
+      text-align: center;
+      padding: 120px 0;
+    }
+    .quote blockquote {
+      font-family: "Fraunces", serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+      line-height: 1.3;
+      max-width: 820px;
+      margin: 0 auto 18px;
+    }
+    .quote cite { color: var(--muted); font-style: normal; font-size: 0.95rem; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--line);
+      background: rgba(5, 6, 15, 0.75);
+      backdrop-filter: blur(10px);
+      padding: 36px 0;
+    }
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    footer .who { font-weight: 600; }
+    footer .meta { color: var(--muted); font-size: 0.92rem; }
+    footer .dot { color: var(--gold); margin: 0 8px; }
+
+    /* ---------- Reveal on scroll ---------- */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      nav ul { display: none; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .why { grid-template-columns: 1fr; }
+      .ob { grid-template-columns: 1fr; gap: 8px; }
+      .ob .num { font-size: 1.4rem; }
+      .tag { justify-self: start; }
+      footer .wrap { flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .ob, .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="glow"></div>
+
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#">Cielos del <span>Norte Chico</span></a>
+      <ul>
+        <li><a class="link" href="#por-que">Por qué aquí</a></li>
+        <li><a class="link" href="#observatorios">Observatorios</a></li>
+        <li><a class="link" href="#santuario">Santuario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Región de Coquimbo · Chile</span>
+      <h1>Donde el cielo<br>se ve <em>más cerca</em></h1>
+      <p class="lead">
+        Entre el desierto de Atacama y los valles transversales, el Norte Chico
+        reúne algunos de los observatorios más importantes del planeta.
+        Aire seco, noches despejadas y montañas que tocan las estrellas.
+      </p>
+      <a class="btn" href="#observatorios">Explorar observatorios →</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><b>+300</b><span>noches despejadas al año</span></div>
+      <div class="stat"><b>2.700 m</b><span>altura de Cerro Pachón</span></div>
+      <div class="stat"><b>2015</b><span>primer Santuario de Cielo Oscuro del mundo</span></div>
+      <div class="stat"><b>8,4 m</b><span>espejo principal del Vera C. Rubin</span></div>
+    </div>
+  </div>
+
+  <section id="por-que">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>¿Por qué aquí?</h2>
+        <p>La geografía del Norte Chico parece diseñada para mirar el universo.</p>
+      </div>
+      <div class="why">
+        <article class="reveal">
+          <div class="icon">☁</div>
+          <h3>Aire extremadamente seco</h3>
+          <p>El anticiclón del Pacífico y la corriente de Humboldt mantienen
+          la humedad baja y las nubes por debajo de las cumbres.</p>
+        </article>
+        <article class="reveal">
+          <div class="icon">⛰</div>
+          <h3>Altura y estabilidad</h3>
+          <p>Cumbres sobre los 2.000 metros dejan atrás buena parte de la
+          atmósfera, logrando imágenes nítidas y estables.</p>
+        </article>
+        <article class="reveal">
+          <div class="icon">✦</div>
+          <h3>Poca contaminación lumínica</h3>
+          <p>Ciudades pequeñas y normas que regulan el alumbrado público
+          protegen la oscuridad natural del cielo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="observatorios">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Observatorios</h2>
+        <p>Ciencia de clase mundial a pocas horas de La Serena.</p>
+      </div>
+      <div class="obs">
+        <div class="ob reveal">
+          <div class="num">01</div>
+          <div>
+            <h3>Observatorio Vera C. Rubin</h3>
+            <p>Cerro Pachón. Fotografiará todo el cielo austral durante una década con la cámara digital más grande jamás construida.</p>
+          </div>
+          <span class="tag">Cerro Pachón</span>
+        </div>
+        <div class="ob reveal">
+          <div class="num">02</div>
+          <div>
+            <h3>Gemini Sur</h3>
+            <p>Telescopio de 8,1 metros, gemelo de Gemini Norte en Hawái. Juntos cubren ambos hemisferios del cielo.</p>
+          </div>
+          <span class="tag">Cerro Pachón</span>
+        </div>
+        <div class="ob reveal">
+          <div class="num">03</div>
+          <div>
+            <h3>Cerro Tololo</h3>
+            <p>Observatorio Interamericano operativo desde los años 60, uno de los pioneros de la astronomía en Chile.</p>
+          </div>
+          <span class="tag">Valle del Elqui</span>
+        </div>
+        <div class="ob reveal">
+          <div class="num">04</div>
+          <div>
+            <h3>La Silla</h3>
+            <p>Primer observatorio del ESO en Chile. Hogar de HARPS, uno de los grandes cazadores de exoplanetas.</p>
+          </div>
+          <span class="tag">La Higuera</span>
+        </div>
+        <div class="ob reveal">
+          <div class="num">05</div>
+          <div>
+            <h3>Mamalluca</h3>
+            <p>Observatorio turístico municipal de Vicuña, abierto a todo público para mirar el cielo con telescopios.</p>
+          </div>
+          <span class="tag">Vicuña</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="santuario" class="quote">
+    <div class="wrap reveal">
+      <blockquote>“El Valle del Elqui fue declarado el primer Santuario Internacional de Cielo Oscuro del mundo.”</blockquote>
+      <cite>Santuario Gabriela Mistral · International Dark-Sky Association, 2015</cite>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="who">Diego Contreras Valenzuela</div>
+      <div class="meta">
+        <span id="year">2026</span><span class="dot">✦</span>Cloud Computing
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año actual dinámico (el HTML trae 2026 como respaldo si JS no carga)
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Aparición de secciones al hacer scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+    // Cielo estrellado animado
+    const canvas = document.getElementById("sky");
+    const ctx = canvas.getContext("2d");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let stars = [], shooting = null, w, h, dpr;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + "px"; canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.floor((w * h) / 2600);
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.3 + 0.2,
+        a: Math.random(),
+        s: Math.random() * 0.015 + 0.003,
+        warm: Math.random() < 0.12
+      }));
+    }
+
+    function draw() {
+      ctx.fillStyle = "#05060f";
+      ctx.fillRect(0, 0, w, h);
+      for (const st of stars) {
+        if (!reduced) {
+          st.a += st.s;
+          if (st.a > 1 || st.a < 0.15) st.s *= -1;
+        }
+        ctx.beginPath();
+        ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+        ctx.fillStyle = st.warm
+          ? `rgba(255, 214, 150, ${st.a})`
+          : `rgba(220, 228, 255, ${st.a})`;
+        ctx.fill();
+      }
+
+      if (!reduced) {
+        if (!shooting && Math.random() < 0.004) {
+          shooting = { x: Math.random() * w * 0.7, y: Math.random() * h * 0.4, len: 0, life: 1 };
+        }
+        if (shooting) {
+          shooting.len += 14; shooting.life -= 0.02;
+          const x2 = shooting.x + shooting.len, y2 = shooting.y + shooting.len * 0.45;
+          const g = ctx.createLinearGradient(shooting.x, shooting.y, x2, y2);
+          g.addColorStop(0, "rgba(255,255,255,0)");
+          g.addColorStop(1, `rgba(255,236,200,${shooting.life})`);
+          ctx.strokeStyle = g; ctx.lineWidth = 1.4;
+          ctx.beginPath(); ctx.moveTo(shooting.x, shooting.y); ctx.lineTo(x2, y2); ctx.stroke();
+          if (shooting.life <= 0) shooting = null;
+        }
+        requestAnimationFrame(draw);
+      }
+    }
+
+    window.addEventListener("resize", () => { resize(); if (reduced) draw(); });
+    resize();
+    draw();
+  </script>
+</body>
+</html>
