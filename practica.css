@@ -1,0 +1,286 @@
+/* ===== VARIABLES: colores reutilizables (se usan con var(--nombre)) ===== */
+:root {
+    --primario: #2563eb;
+    --primario-oscuro: #1e40af;
+    --oscuro: #1f2937;
+    --claro: #f3f4f6;
+    --texto: #374151;
+    --error: #dc2626;
+    --exito: #16a34a;
+}
+
+/* ===== RESET: quita márgenes por defecto del navegador ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* el padding no agranda los elementos */
+}
+
+html {
+    scroll-behavior: smooth; /* desplazamiento suave al hacer clic en el menú */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    line-height: 1.6;
+    min-height: 100vh;          /* mínimo, el alto de la pantalla */
+    display: flex;
+    flex-direction: column;     /* header, main y footer apilados */
+}
+
+main {
+    flex: 1;                    /* se estira y empuja el footer abajo */
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    position: sticky;           /* se queda pegada arriba al hacer scroll */
+    top: 0;
+    z-index: 100;               /* queda por encima del resto */
+    display: flex;              /* logo y menú en la misma fila */
+    justify-content: space-between; /* logo a la izquierda, menú a la derecha */
+    align-items: center;        /* centrados verticalmente */
+    padding: 15px 30px;
+    background: var(--oscuro);
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--primario);
+}
+
+.menu {
+    display: flex;              /* los <li> en fila (horizontal) */
+    gap: 25px;                  /* espacio entre ítems */
+    list-style: none;           /* sin viñetas */
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;      /* sin subrayado */
+    padding: 5px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.menu a:hover,
+.menu a.activo {
+    color: var(--primario);
+    border-bottom-color: var(--primario);
+}
+
+/* Botón hamburguesa: oculto en pantallas grandes */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* ===== HERO (portada) ===== */
+.hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* centrado vertical */
+    align-items: center;        /* centrado horizontal */
+    text-align: center;
+    gap: 20px;
+    padding: 40px 20px;
+    color: white;
+    background: linear-gradient(135deg, var(--primario), var(--oscuro));
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+}
+
+/* ===== BOTÓN reutilizable ===== */
+.boton {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.boton:hover {
+    background: var(--primario-oscuro);
+    transform: translateY(-2px);
+}
+
+.hero .boton {
+    background: white;
+    color: var(--primario);
+}
+
+/* ===== SECCIONES ===== */
+.seccion {
+    padding: 60px 30px;
+    max-width: 1000px;
+    margin: 0 auto;             /* centra la sección horizontalmente */
+}
+
+.seccion h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--oscuro);
+}
+
+.seccion-alterna {
+    max-width: none;
+    background: var(--claro);
+    text-align: center;
+}
+
+.lista {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;            /* si no caben, bajan a otra línea */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.lista li {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== TARJETAS con GRID ===== */
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 20px;
+}
+
+.tarjeta {
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+}
+
+.tarjeta h3 {
+    color: var(--primario);
+    margin-bottom: 10px;
+}
+
+/* ===== FORMULARIO ===== */
+.formulario {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;                  /* reemplaza a los <br><br> */
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;     /* label arriba, input abajo */
+    gap: 5px;
+}
+
+.campo label {
+    font-weight: bold;
+}
+
+.campo input,
+.campo textarea {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--primario);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Clase que agrega el JS cuando un campo tiene error */
+.campo .invalido {
+    border-color: var(--error);
+}
+
+.error {
+    color: var(--error);
+    font-size: 0.85rem;
+}
+
+.contador {
+    color: #6b7280;
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+.exito {
+    color: var(--exito);
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: var(--oscuro);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* ===== RESPONSIVE: pantallas de 768px o menos (celular / tablet) ===== */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;         /* aparece la hamburguesa */
+    }
+
+    .menu {
+        display: none;          /* menú oculto hasta tocar la hamburguesa */
+        position: absolute;
+        top: 100%;              /* justo debajo de la navbar */
+        left: 0;
+        right: 0;
+        flex-direction: column; /* ítems en columna */
+        align-items: center;
+        gap: 15px;
+        padding: 20px 0;
+        background: var(--oscuro);
+    }
+
+    .menu.abierto {
+        display: flex;          /* el JS agrega la clase "abierto" */
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .tarjetas {
+        grid-template-columns: 1fr; /* 1 columna en celular */
+    }
+}

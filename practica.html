@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ===== METADATOS: no se ven en la página ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de práctica - Evaluación jueves</title>
+
+    <!-- CSS y JS externos. "defer" = el JS se ejecuta cuando el HTML ya cargó -->
+    <link rel="stylesheet" href="practica.css">
+    <script src="practica.js" defer></script>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header>
+        <nav class="navbar">
+            <a href="#inicio" class="logo">Mi<span>Logo</span></a>
+
+            <!-- Botón hamburguesa: solo se ve en celular (ver CSS @media) -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">☰</button>
+
+            <ul class="menu" id="menu">
+                <li><a href="#inicio" class="activo">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <main>
+
+        <!-- Sección 1: Hero (portada) -->
+        <section id="inicio" class="hero">
+            <h1>Bienvenido a mi página de práctica</h1>
+            <p>Esta es una página de práctica para la evaluación del jueves.</p>
+            <a href="#contacto" class="boton">Contáctame</a>
+        </section>
+
+        <!-- Sección 2: Tarjetas (cards) en grid -->
+        <section id="servicios" class="seccion">
+            <h2>Servicios</h2>
+            <div class="tarjetas">
+                <article class="tarjeta">
+                    <h3>Diseño web</h3>
+                    <p>Páginas modernas y adaptables a cualquier pantalla.</p>
+                </article>
+                <article class="tarjeta">
+                    <h3>Desarrollo</h3>
+                    <p>Aplicaciones con HTML, CSS y JavaScript.</p>
+                </article>
+                <article class="tarjeta">
+                    <h3>Soporte</h3>
+                    <p>Mantenimiento y mejoras continuas de tu sitio.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Sección 3: Texto + lista -->
+        <section id="nosotros" class="seccion seccion-alterna">
+            <h2>Nosotros</h2>
+            <p>Somos estudiantes de Ingeniería en Tecnologías de Información.</p>
+            <ul class="lista">
+                <li>Trabajo en equipo</li>
+                <li>Aprendizaje constante</li>
+                <li>Buenas prácticas</li>
+            </ul>
+        </section>
+
+        <!-- Sección 4: Formulario -->
+        <section id="contacto" class="seccion">
+            <h2>Formulario de contacto</h2>
+
+            <!-- novalidate: desactiva la validación del navegador para validar con JS -->
+            <form id="formulario" class="formulario" novalidate>
+                <div class="campo">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
+                    <small class="error" id="error-nombre"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Tu apellido">
+                    <small class="error" id="error-apellido"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com">
+                    <small class="error" id="error-email"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+                    <small class="contador" id="contador">0 / 200</small>
+                    <small class="error" id="error-mensaje"></small>
+                </div>
+
+                <button type="submit" class="boton">Enviar</button>
+
+                <!-- Mensaje de éxito: oculto hasta que se envía bien -->
+                <p class="exito" id="exito"></p>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>Diego Contreras Valenzuela · <span id="anio">2026</span> · Nombre de la asignatura</p>
+        <p>&copy; Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
